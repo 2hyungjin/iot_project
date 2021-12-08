@@ -1,0 +1,30 @@
+﻿int gasPin = 2;   // 가스센서 입력을 위한 아날로그 핀
+int pirPin = 3; 
+int ledPin = 4;
+void setup() {
+  pinMode(gasPin ,INPUT);// 아날로그 핀 A0를 입력모드로 설정
+  pinMode(pirPin ,INPUT);
+
+  attachInterrupt(0,intGas,RISING);
+  attachInterrupt(1,intPir,RISING);
+  
+  Serial.begin(9600);
+}
+void intGas(){
+  Serial.println("gas");
+}
+void intPir(){
+  Serial.println("pir");
+}
+void inputSerial(){
+  if(Serial.available()){
+    if(Serial.read()=='1'){
+      digitalWrite(ledPin,HIGH);
+    }else{
+      digitalWrite(ledPin,LOW);      
+    }
+  }
+}
+void loop() {
+  inputSerial();
+} 
